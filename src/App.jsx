@@ -1,28 +1,37 @@
-import { useState } from 'react'
+import React, { useState } from 'react';
+import AccountLayout from './components/AccountLayout';
+import Hero from './components/Hero';
+import ProfileCard from './components/ProfileCard';
+import ProfileForm from './components/ProfileForm';
 
-function App() {
-  const [count, setCount] = useState(0)
+export default function App() {
+  const [profile, setProfile] = useState({
+    avatarUrl: '',
+    name: '',
+    username: '',
+  });
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50 flex items-center justify-center">
-      <div className="bg-white p-8 rounded-lg shadow-lg">
-        <h1 className="text-3xl font-bold text-gray-800 mb-4">
-          Vibe Coding Platform
-        </h1>
-        <p className="text-gray-600 mb-6">
-          Your AI-powered development environment
-        </p>
-        <div className="text-center">
-          <button
-            onClick={() => setCount(count + 1)}
-            className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded"
-          >
-            Count is {count}
-          </button>
-        </div>
-      </div>
-    </div>
-  )
-}
+    <AccountLayout>
+      <Hero />
 
-export default App
+      <main className="mx-auto -mt-10 max-w-6xl px-6 pb-16">
+        <div className="grid gap-6 md:grid-cols-[1fr,1.2fr]">
+          <div className="order-2 md:order-1">
+            <section>
+              <h2 className="mb-3 text-xl font-semibold text-white">Edit Profile</h2>
+              <ProfileForm initial={profile} onChange={setProfile} />
+            </section>
+          </div>
+
+          <div className="order-1 md:order-2">
+            <section>
+              <h2 className="mb-3 text-xl font-semibold text-white">Live Preview</h2>
+              <ProfileCard {...profile} />
+            </section>
+          </div>
+        </div>
+      </main>
+    </AccountLayout>
+  );
+}
